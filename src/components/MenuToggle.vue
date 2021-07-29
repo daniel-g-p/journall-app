@@ -36,9 +36,12 @@ export default {
    position: relative;
    color: $color-white;
    transition: color 0.25s ease;
-   width: 1.5rem;
+   width: 2rem;
    height: 1.5rem;
    cursor: pointer;
+   @include responsive($screen-tablet-l) {
+      display: none;
+   }
    &:hover {
       color: $color-grey-50;
    }

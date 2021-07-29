@@ -94,6 +94,14 @@ export default {
    flex-direction: column;
    justify-content: center;
    transition: right 0.5s ease;
+   @include responsive($screen-tablet-l) {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: auto;
+      height: auto;
+      flex-grow: 1;
+   }
    &--active {
       right: 0;
    }

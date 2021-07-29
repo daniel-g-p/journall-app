@@ -7,7 +7,7 @@
             v-html="iconPath"
          ></svg>
       </div>
-      <span class="link__text">Home</span>
+      <span class="link__text">{{ name }}</span>
    </a>
 </template>
 
@@ -52,8 +52,15 @@ export default {
    color: $color-white;
    display: flex;
    align-items: center;
-   padding: 1em 2em;
+   padding: 1em 1.5em;
    position: relative;
+   z-index: 1;
+   @include responsive($screen-tablet-s) {
+      padding: 1em 3em;
+   }
+   @include responsive($screen-tablet-l) {
+      padding: 1em 6em 1em 2.25em;
+   }
    &:not(:last-child) {
       margin-bottom: 0.5em;
    }

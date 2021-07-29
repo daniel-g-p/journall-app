@@ -41,6 +41,18 @@ export default {
    display: flex;
    justify-content: space-between;
    align-items: center;
+   @include responsive($screen-mobile-m) {
+      padding: 1.5rem;
+   }
+   @include responsive($screen-tablet-s) {
+      padding: 1.5rem 3rem;
+   }
+   @include responsive($screen-tablet-l) {
+      padding: 2.25rem 0 0;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100vh;
+   }
    &__logo {
       display: inline-block;
       height: 2rem;
