@@ -1,8 +1,15 @@
 <template>
-   <h1>Hello World</h1>
+   <the-menu></the-menu>
 </template>
 
 <script>
+import TheMenu from "./components/TheMenu.vue";
+
+export default {
+   components: {
+      "the-menu": TheMenu,
+   },
+};
 </script>
 
 <style lang="scss">
