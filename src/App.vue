@@ -1,26 +1,70 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+   <h1>Hello World</h1>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+@import "./scss/abstracts.scss";
+
+@font-face {
+   font-family: "Pacifico";
+   src: url("./fonts/pacifico-regular.woff2") format("woff2"),
+      url("./fonts/pacifico-regular.woff") format("woff");
+   font-weight: 400;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: "Lato";
+   src: url("./fonts/lato-bold.woff2") format("woff2"),
+      url("./fonts/lato-bold.woff") format("woff");
+   font-weight: 700;
+   font-style: normal;
+}
+
+@font-face {
+   font-family: "Lato";
+   src: url("./fonts/lato-regular.woff2") format("woff2"),
+      url("./fonts/lato-regular.woff") format("woff");
+   font-weight: 400;
+   font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+   margin: 0;
+   padding: 0;
+   box-sizing: inherit;
+}
+
+::selection {
+   background-color: $color-grey-25;
+   color: $color-white;
+}
+
+html {
+   font: 400 100%/1 "Lato", sans-serif;
+   color: $color-grey-25;
+}
+
+body {
+   box-sizing: border-box;
+   color: $color-grey-25;
+}
+
+a,
+button {
+   cursor: pointer;
+}
+
+button,
+input,
+textarea {
+   outline: none;
+   border: none;
+   font: 400 1rem/1 "Lato", sans-serif;
 }
 </style>

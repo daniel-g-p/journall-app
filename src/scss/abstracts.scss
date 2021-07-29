@@ -1,0 +1,27 @@
+// COLORS
+$color-green: #8FEF8F;
+$color-purple: #8F8FEF;
+$color-red: #EF8F8F;
+$color-green-light: #E9FCE9;
+$color-white: #FFFFFF;
+$color-grey-95: #F2F2F2;
+$color-grey-75: #BFBFBF;
+$color-grey-50: #808080;
+$color-grey-25: #404040;
+$color-shadow: #00000025;
+// BREAKPOINTS
+$screen-mobile-s: 320px;
+$screen-mobile-m: 440px;
+$screen-mobile-l: 560px;
+$screen-tablet-s: 680px;
+$screen-tablet-m: 800px;
+$screen-tablet-l: 920px;
+$screen-desktop-s: 1040px;
+$screen-desktop-m: 1160px;
+$screen-desktop-l: 1280px;
+// MIXINS
+@mixin responsive($screen-size) {
+    @media (min-width: $screen-size) {
+        @content;
+    }
+}
