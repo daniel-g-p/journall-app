@@ -1,5 +1,5 @@
 <template>
-   <nav class="navigation">
+   <nav class="navigation" v-bind:class="activeClass">
       <menu-navigation-link
          v-for="link in links"
          v-bind:key="link.name"
@@ -12,6 +12,12 @@
 import MenuNavigationLink from "./MenuNavigationLink.vue";
 
 export default {
+   props: {
+      isActive: {
+         type: Boolean,
+         required: true,
+      },
+   },
    components: {
       "menu-navigation-link": MenuNavigationLink,
    },
@@ -67,6 +73,9 @@ export default {
       activeLink() {
          return this.links.find((link) => link.active);
       },
+      activeClass() {
+         return { "navigation--active": this.isActive };
+      },
    },
 };
 </script>
@@ -80,9 +89,13 @@ export default {
    width: 100vw;
    position: fixed;
    top: 0;
-   right: 0;
+   right: 100%;
    display: flex;
    flex-direction: column;
    justify-content: center;
+   transition: right 0.5s ease;
+   &--active {
+      right: 0;
+   }
 }
 </style>
