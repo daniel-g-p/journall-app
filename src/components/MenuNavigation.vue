@@ -4,6 +4,7 @@
          v-for="link in links"
          v-bind:key="link.name"
          v-bind="link"
+         v-on:set-active-link="setActiveLink"
       ></menu-navigation-link>
    </nav>
 </template>
@@ -18,6 +19,7 @@ export default {
          required: true,
       },
    },
+   emits: ["toggle-menu"],
    components: {
       "menu-navigation-link": MenuNavigationLink,
    },
@@ -71,10 +73,17 @@ export default {
    },
    computed: {
       activeLink() {
-         return this.links.find((link) => link.active);
+         return this.links.find((l) => l.active);
       },
       activeClass() {
          return { "navigation--active": this.isActive };
+      },
+   },
+   methods: {
+      setActiveLink(link) {
+         this.activeLink.active = false;
+         this.links.find((l) => l.name === link).active = true;
+         this.$emit("toggle-menu");
       },
    },
 };

@@ -8,12 +8,13 @@
 
 <script>
 export default {
-   emits: ["toggle-menu"],
-   data() {
-      return {
-         isActive: false,
-      };
+   props: {
+      isActive: {
+         type: Boolean,
+         required: true,
+      },
    },
+   emits: ["toggle-menu"],
    computed: {
       activeClass() {
          return { "toggle--active": this.isActive };
@@ -21,7 +22,6 @@ export default {
    },
    methods: {
       toggleMenu() {
-         this.isActive = !this.isActive;
          this.$emit("toggle-menu");
       },
    },

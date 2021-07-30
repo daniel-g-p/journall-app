@@ -1,13 +1,16 @@
 <template>
    <the-menu></the-menu>
+   <the-content></the-content>
 </template>
 
 <script>
 import TheMenu from "./components/TheMenu.vue";
+import TheContent from "./components/TheContent.vue";
 
 export default {
    components: {
       "the-menu": TheMenu,
+      "the-content": TheContent,
    },
 };
 </script>
@@ -76,8 +79,12 @@ textarea {
 }
 
 #app {
+   width: 100vw;
+   height: 100vh;
    display: grid;
+   grid-template-rows: max-content 1fr;
    @include responsive($screen-tablet-l) {
+      grid-template-rows: 1fr;
       grid-template-columns: max-content 1fr;
    }
 }

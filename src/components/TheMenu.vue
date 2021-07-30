@@ -5,8 +5,14 @@
          alt="Journall Logo"
          class="menu__logo"
       />
-      <menu-navigation v-bind:isActive="menuIsActive"></menu-navigation>
-      <menu-toggle v-on:toggle-menu="toggleMenu"></menu-toggle>
+      <menu-navigation
+         v-bind:isActive="menuIsActive"
+         v-on:toggle-menu="toggleMenu"
+      ></menu-navigation>
+      <menu-toggle
+         v-bind:isActive="menuIsActive"
+         v-on:toggle-menu="toggleMenu"
+      ></menu-toggle>
    </nav>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-   <a class="link" v-bind:class="activeClass">
+   <a class="link" v-bind:class="activeClass" v-on:click="setActiveLink">
       <div class="link__icon">
          <svg
             v-bind:viewBox="iconViewbox"
@@ -37,9 +37,15 @@ export default {
          required: true,
       },
    },
+   emits: ["set-active-link"],
    computed: {
       activeClass() {
          return { "link--active": this.active };
+      },
+   },
+   methods: {
+      setActiveLink() {
+         this.$emit("set-active-link", this.name);
       },
    },
 };
@@ -81,7 +87,8 @@ export default {
          width: 100%;
          height: 100%;
          top: 0;
-         transition: height 0.25s ease, top 0.25s ease, width 0.25s ease 0.25s;
+         transition: height 0.25s ease, top 0.25s ease, width 0.25s ease 0.25s,
+            background-color 0.25s ease;
       }
       .link__text {
          color: $color-green;
@@ -101,17 +108,8 @@ export default {
          height: 100%;
          top: 0;
       }
-      &:hover {
-         & > .link__text {
-            color: $color-green;
-         }
-         .link__svg {
-            fill: $color-green;
-         }
-         &::after {
-            background-color: $color-white;
-            transition: background-color 0.25s ease;
-         }
+      &:hover > .link__text {
+         color: $color-white;
       }
    }
    &__icon {
