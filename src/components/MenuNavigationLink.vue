@@ -127,7 +127,6 @@ export default {
    }
    &__text {
       text-transform: uppercase;
-      font-weight: 700;
       transition: color 0.25s ease;
    }
 }
