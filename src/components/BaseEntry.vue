@@ -12,7 +12,7 @@
          <div class="entry__links">
             <a v-bind:href="id" class="entry__link">Read</a>
          </div>
-         <div class="entry__like"></div>
+         <base-like-button v-bind:totalLikes="totalLikes"></base-like-button>
       </div>
    </base-card>
 </template>

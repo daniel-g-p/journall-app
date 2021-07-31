@@ -6,6 +6,7 @@ import BaseCard from "./components/BaseCard.vue";
 import BaseDropdown from "./components/BaseDropdown.vue";
 import BaseGrid from "./components/BaseGrid.vue";
 import BaseEntry from "./components/BaseEntry.vue";
+import BaseLikeButton from "./components/BaseLikeButton.vue";
 
 const app = createApp(App);
 
@@ -14,5 +15,6 @@ app.component("base-card", BaseCard);
 app.component("base-dropdown", BaseDropdown);
 app.component("base-grid", BaseGrid);
 app.component("base-entry", BaseEntry);
+app.component("base-like-button", BaseLikeButton);
 
 app.mount("#app");
