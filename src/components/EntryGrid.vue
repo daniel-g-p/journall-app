@@ -15,7 +15,12 @@
 </template>
 
 <script>
+import EntryGridCard from "./EntryGridCard.vue";
+
 export default {
+   components: {
+      "entry-grid-card": EntryGridCard,
+   },
    props: {
       content: {
          type: Array,

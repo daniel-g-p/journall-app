@@ -14,7 +14,7 @@
          </div>
          <entry-grid-card-like
             v-bind:totalLikes="totalLikes"
-            v-on:activate-circle="toggleCircle"
+            v-on:activate-circle="toggleForm"
          ></entry-grid-card-like>
       </div>
       <div
@@ -22,11 +22,26 @@
          v-bind:class="circleClass"
          v-bind:style="circleStyle"
       ></div>
+      <entry-grid-card-form
+         class="entry__form"
+         v-bind:class="formClass"
+         v-bind:id="id"
+         v-on:save-entry="saveEntry"
+         v-on:cancel-save="toggleForm"
+      ></entry-grid-card-form>
    </base-card>
 </template>
 
 <script>
+import EntryGridCardLike from "./EntryGridCardLike.vue";
+import EntryGridCardForm from "./EntryGridCardForm.vue";
+
 export default {
+   components: {
+      "entry-grid-card-like": EntryGridCardLike,
+      "entry-grid-card-form": EntryGridCardForm,
+   },
+   inject: ["likeEntry"],
    props: {
       title: {
          type: String,
@@ -53,7 +68,8 @@ export default {
       return {
          randomNumber: Math.floor(Math.random() * 4),
          circleRadius: 0,
-         circleActive: false,
+         formActive: false,
+         isLiked: false,
       };
    },
    computed: {
@@ -73,7 +89,10 @@ export default {
          };
       },
       circleClass() {
-         return { "entry__circle--active": this.circleActive };
+         return { "entry__circle--active": this.formActive };
+      },
+      formClass() {
+         return { "entry__form--active": this.formActive };
       },
    },
    methods: {
@@ -82,8 +101,13 @@ export default {
          this.circleRadius =
             (element.clientHeight ** 2 + element.clientWidth ** 2) ** 0.5;
       },
-      toggleCircle() {
-         this.circleActive = !this.circleActive;
+      toggleForm() {
+         this.formActive = !this.formActive;
+      },
+      saveEntry(categories) {
+         this.likeEntry(this.id, categories);
+         this.formActive = !this.formActive;
+         this.isLiked = !this.isLiked;
       },
    },
    mounted() {
@@ -171,9 +195,23 @@ export default {
       background-color: $color-purple;
       border-radius: 50%;
       transform: translate(50%, 50%) scale(0);
-      transition: transform 0.5s ease;
+      transition: transform 0.5s ease 0.25s;
       &--active {
+         transition: transform 0.5s ease;
          transform: translate(50%, 50%) scale(1);
+      }
+   }
+   &__form {
+      position: absolute;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      &--active {
+         transition: opacity 0.25s ease 0.25s;
+         pointer-events: all;
+         opacity: 1;
       }
    }
 }

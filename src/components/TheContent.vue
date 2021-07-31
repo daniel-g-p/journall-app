@@ -13,14 +13,15 @@ export default {
    },
    provide() {
       return {
-         user: this.activeUser,
+         user: this.user,
          entries: this.entries,
          quotes: this.quotes,
+         likeEntry: this.likeEntry,
       };
    },
    data() {
       return {
-         activeUser: {
+         user: {
             username: "testuser",
             email: "test@journall.com",
             password: "Journall.2021",
@@ -30,11 +31,11 @@ export default {
                month: "July",
                year: 2021,
             },
+            favorites: [],
+            own: [],
          },
          entries: [],
          quotes: [],
-         favorites: [],
-         own: [],
       };
    },
    methods: {
@@ -42,19 +43,20 @@ export default {
          for (let i = 0; i < 50; i++) {
             const entry = randomEntry();
             this.entries.push(entry);
-            if (Math.random() < 0.1) {
-               this.favorites.push(entry.id);
-            }
          }
       },
       populateQuotes() {
          for (let i = 0; i < 50; i++) {
             const quote = randomQuote();
             this.quotes.push(quote);
-            if (Math.random() < 0.1) {
-               this.favorites.push(quote.id);
-            }
          }
+      },
+      likeEntry(id, categories) {
+         this.user.favorites.push({
+            id: id,
+            categories: categories,
+         });
+         console.log(this.user);
       },
    },
    mounted() {
