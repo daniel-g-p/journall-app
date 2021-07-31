@@ -1,25 +1,64 @@
 <template>
-   <base-card class="entry">
-      <h2 class="entry__heading">Story Title</h2>
-      <div class="entry__date">17 December 2021</div>
+   <base-card class="entry" v-bind:modifier="entryClass">
+      <h2 class="entry__heading">{{ title }}</h2>
+      <div class="entry__date">
+         {{ date.day }} {{ date.month }} {{ date.year }}
+      </div>
       <p class="entry__preview">
-         Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates
-         consectetur voluptatem atque, blanditiis sunt in totam at a nemo et
-         dolorum nulla corrupti provident alias quaerat architecto est officia
-         harum. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-         Voluptatem, minus eligendi aut molestias repellendus perferendis quia
-         libero rerum a? Sit iure odio, suscipit architecto quod deserunt ullam
-         esse vitae error!
+         {{ content }}
       </p>
       <div class="entry__overlay"></div>
       <div class="entry__controls">
          <div class="entry__links">
-            <a href="/" class="entry__link">Link 1</a>
+            <a v-bind:href="id" class="entry__link">Read</a>
          </div>
          <div class="entry__like"></div>
       </div>
    </base-card>
 </template>
+
+<script>
+export default {
+   props: {
+      title: {
+         type: String,
+         required: true,
+      },
+      date: {
+         type: Object,
+         required: true,
+      },
+      content: {
+         type: String,
+         required: true,
+      },
+      id: {
+         type: String,
+         required: true,
+      },
+      totalLikes: {
+         type: Number,
+         required: true,
+      },
+   },
+   data() {
+      return {
+         randomNumber: Math.floor(Math.random() * 4),
+      };
+   },
+   computed: {
+      entryClass() {
+         let output;
+         if (this.randomNumber === 0) {
+            output = "horizontal";
+         } else if (this.randomNumber === 1) {
+            output = "vertical";
+         }
+         return output;
+      },
+   },
+};
+</script>
 
 <style lang="scss" scoped>
 @import "../scss/abstracts.scss";
@@ -27,7 +66,6 @@
 .entry {
    position: relative;
    width: 100%;
-   height: 24rem;
    overflow: hidden;
    &__heading {
       font-size: 1.5rem;

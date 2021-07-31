@@ -4,6 +4,11 @@
          class="grid__item"
          v-for="item in content"
          v-bind:key="item.id"
+         v-bind:title="item.title"
+         v-bind:date="item.date"
+         v-bind:content="item.content"
+         v-bind:id="item.id"
+         v-bind:totalLikes="item.likes.total"
       >
       </base-entry>
    </section>
@@ -28,6 +33,8 @@ export default {
    gap: 1rem;
    padding: 1rem 0;
    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+   grid-auto-rows: 24rem;
+   grid-auto-flow: dense;
    @include responsive($screen-mobile-m) {
       padding: 1.5rem 0;
       gap: 1.5rem;
@@ -48,7 +55,6 @@ export default {
    &__item {
       display: block;
       width: 100%;
-      height: 20rem;
       background-color: $color-white;
    }
 }
