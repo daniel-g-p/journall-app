@@ -54,7 +54,7 @@ export default {
       padding: 1.5rem 3rem;
    }
    @include responsive($screen-tablet-l) {
-      padding: 2.25rem 0 0;
+      padding: 3rem 0 0;
       flex-direction: column;
       justify-content: flex-start;
       height: 100vh;

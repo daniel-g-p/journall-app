@@ -1,9 +1,21 @@
 <template>
-   <main class="content"></main>
+   <main class="content">
+      <home-page></home-page>
+   </main>
 </template>
 
 <script>
+import HomePage from "./HomePage.vue";
+
 export default {
+   components: {
+      "home-page": HomePage,
+   },
+   provide() {
+      return {
+         user: this.activeUser,
+      };
+   },
    data() {
       return {
          activeUser: {
@@ -25,7 +37,7 @@ export default {
    },
    methods: {
       populateEntries() {
-         for (let i = 0; i < 100; i++) {
+         for (let i = 0; i < 50; i++) {
             const entry = randomEntry();
             this.entries.push(entry);
             if (Math.random() < 0.1) {
@@ -34,7 +46,7 @@ export default {
          }
       },
       populateQuotes() {
-         for (let i = 0; i < 100; i++) {
+         for (let i = 0; i < 50; i++) {
             const quote = randomQuote();
             this.quotes.push(quote);
             if (Math.random() < 0.1) {
@@ -46,9 +58,6 @@ export default {
    mounted() {
       this.populateEntries();
       this.populateQuotes();
-      console.log(this.entries);
-      console.log(this.quotes);
-      console.log(this.favorites);
    },
 };
 
@@ -214,5 +223,18 @@ const randomQuote = () => {
    background-color: $color-green-light;
    overflow-x: hidden;
    overflow-y: scroll;
+   padding: 1rem;
+   @include responsive($screen-mobile-m) {
+      padding: 1.5rem;
+   }
+   @include responsive($screen-tablet-s) {
+      padding: 1.5rem 3rem;
+   }
+   @include responsive($screen-tablet-l) {
+      padding: 3rem;
+   }
+   @include responsive($screen-desktop-m) {
+      padding: 3rem 4.5rem;
+   }
 }
 </style>

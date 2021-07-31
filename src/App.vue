@@ -76,6 +76,7 @@ textarea {
    outline: none;
    border: none;
    font: 400 1rem/1 "Lato", sans-serif;
+   background: none;
 }
 
 #app {
