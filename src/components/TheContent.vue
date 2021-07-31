@@ -14,6 +14,8 @@ export default {
    provide() {
       return {
          user: this.activeUser,
+         entries: this.entries,
+         quotes: this.quotes,
       };
    },
    data() {
@@ -190,6 +192,7 @@ const randomLikes = (max = 100) => {
 };
 const randomEntry = () => {
    const entry = {};
+   entry.type = "entry";
    entry.id = randomID();
    entry.author = randomUser();
    entry.date = randomDate();
@@ -208,7 +211,7 @@ const randomAuthor = () => {
 };
 const randomQuote = () => {
    const quote = {};
-   quote.id = randomID();
+   (quote.type = "quote"), (quote.id = randomID());
    quote.author = randomAuthor();
    quote.content = randomContent();
    quote.likes = randomLikes();

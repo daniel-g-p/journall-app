@@ -14,6 +14,7 @@
          >
       </template>
    </base-header>
+   <base-grid v-bind:content="entries"></base-grid>
 </template>
 
 <script>
@@ -21,6 +22,14 @@ export default {
    inject: {
       user: {
          type: Object,
+         required: true,
+      },
+      entries: {
+         type: Array,
+         required: true,
+      },
+      quotes: {
+         type: Array,
          required: true,
       },
    },
