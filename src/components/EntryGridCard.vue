@@ -12,10 +12,10 @@
          <div class="entry__links">
             <a v-bind:href="id" class="entry__link">Read</a>
          </div>
-         <base-like-button
+         <entry-grid-card-like
             v-bind:totalLikes="totalLikes"
             v-on:activate-circle="toggleCircle"
-         ></base-like-button>
+         ></entry-grid-card-like>
       </div>
       <div
          class="entry__circle"

@@ -1,6 +1,6 @@
 <template>
    <section class="grid">
-      <base-entry
+      <entry-grid-card
          class="grid__item"
          v-for="item in content"
          v-bind:key="item.id"
@@ -10,7 +10,7 @@
          v-bind:id="item.id"
          v-bind:totalLikes="item.likes.total"
       >
-      </base-entry>
+      </entry-grid-card>
    </section>
 </template>
 

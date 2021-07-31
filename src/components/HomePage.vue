@@ -14,7 +14,7 @@
          >
       </template>
    </base-header>
-   <base-grid v-bind:content="entries"></base-grid>
+   <entry-grid v-bind:content="entries"></entry-grid>
 </template>
 
 <script>
