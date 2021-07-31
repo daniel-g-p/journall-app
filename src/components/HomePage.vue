@@ -4,10 +4,14 @@
          Welcome to Journall, {{ user.username }}!
       </template>
       <template v-slot:default>
-         <p>Today I need a dose of:</p>
-         <base-dropdown v-bind:inputOptions="inputOptions" inputID="category">{{
-            selectedOption
-         }}</base-dropdown>
+         <p class="header__text">Today I need a dose of:</p>
+         <base-dropdown
+            class="header__dropdown"
+            v-bind:inputOptions="inputOptions"
+            inputID="category"
+            v-on:set-option="setOption"
+            >{{ selectedOption }}</base-dropdown
+         >
       </template>
    </base-header>
 </template>
@@ -35,5 +39,28 @@ export default {
          selectedOption: "Anything",
       };
    },
+   methods: {
+      setOption(option) {
+         this.selectedOption = option;
+      },
+   },
 };
 </script>
+
+<style lang="scss" scoped>
+@import "../scss/abstracts.scss";
+
+.header {
+   &__text {
+      margin-bottom: 0.75rem;
+      @include responsive($screen-mobile-l) {
+         display: inline-block;
+         margin-bottom: 0;
+         margin-right: 0.75rem;
+      }
+   }
+   &__dropdown {
+      width: 12rem;
+   }
+}
+</style>

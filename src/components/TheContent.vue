@@ -228,13 +228,13 @@ const randomQuote = () => {
       padding: 1.5rem;
    }
    @include responsive($screen-tablet-s) {
-      padding: 1.5rem 3rem;
+      padding: 2.25rem;
    }
    @include responsive($screen-tablet-l) {
       padding: 3rem;
    }
    @include responsive($screen-desktop-m) {
-      padding: 3rem 4.5rem;
+      padding: 4.5rem;
    }
 }
 </style>
