@@ -6,6 +6,39 @@
             class="form__checkbox"
             type="checkbox"
             name="feelings"
+            value="admiration"
+            v-bind:id="id + '-admiration'"
+            v-model="selectedCategories"
+         />
+         <label class="form__checkbox-label" v-bind:for="id + '-admiration'"
+            >Admiration</label
+         >
+         <input
+            class="form__checkbox"
+            type="checkbox"
+            name="feelings"
+            value="curiosity"
+            v-bind:id="id + '-curiosity'"
+            v-model="selectedCategories"
+         />
+         <label class="form__checkbox-label" v-bind:for="id + '-curiosity'"
+            >Curiosity</label
+         >
+         <input
+            class="form__checkbox"
+            type="checkbox"
+            name="feelings"
+            value="gratitude"
+            v-bind:id="id + '-gratitude'"
+            v-model="selectedCategories"
+         />
+         <label class="form__checkbox-label" v-bind:for="id + '-gratitude'"
+            >Gratitude</label
+         >
+         <input
+            class="form__checkbox"
+            type="checkbox"
+            name="feelings"
             value="hope"
             v-bind:id="id + '-hope'"
             v-model="selectedCategories"
@@ -28,28 +61,6 @@
             class="form__checkbox"
             type="checkbox"
             name="feelings"
-            value="gratitude"
-            v-bind:id="id + '-gratitude'"
-            v-model="selectedCategories"
-         />
-         <label class="form__checkbox-label" v-bind:for="id + '-gratitude'"
-            >Gratitude</label
-         >
-         <input
-            class="form__checkbox"
-            type="checkbox"
-            name="feelings"
-            value="admiration"
-            v-bind:id="id + '-admiration'"
-            v-model="selectedCategories"
-         />
-         <label class="form__checkbox-label" v-bind:for="id + '-admiration'"
-            >Admiration</label
-         >
-         <input
-            class="form__checkbox"
-            type="checkbox"
-            name="feelings"
             value="inspiration"
             v-bind:id="id + '-inspiration'"
             v-model="selectedCategories"
@@ -61,12 +72,12 @@
             class="form__checkbox"
             type="checkbox"
             name="feelings"
-            value="curiosity"
-            v-bind:id="id + '-curiosity'"
+            value="serenity"
+            v-bind:id="id + '-serenity'"
             v-model="selectedCategories"
          />
-         <label class="form__checkbox-label" v-bind:for="id + '-curiosity'"
-            >Curiosity</label
+         <label class="form__checkbox-label" v-bind:for="id + '-serenity'"
+            >Serenity</label
          >
       </div>
       <div class="form__buttons">

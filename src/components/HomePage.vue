@@ -40,13 +40,13 @@ export default {
       return {
          inputOptions: [
             "Anything",
-            "Joy",
-            "Gratitude",
-            "Serenity",
-            "Curiosity",
-            "Inspiration",
-            "Hope",
             "Admiration",
+            "Curiosity",
+            "Gratitude",
+            "Hope",
+            "Inspiration",
+            "Joy",
+            "Serenity",
          ],
          selectedOption: "Anything",
       };

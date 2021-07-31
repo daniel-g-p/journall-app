@@ -62,12 +62,24 @@ export default {
          for (let category of categories) {
             entry.likes[category]++;
          }
-         console.log(entry);
+         console.log(entry.likes);
          console.log(this.user.favorites);
       },
       removeLike(id) {
-         const index = this.user.favorites.findIndex((item) => item.id === id);
-         this.user.favorites.splice(index, 1);
+         const favoriteIndex = this.user.favorites.findIndex(
+            (item) => item.id === id
+         );
+         const categories = this.user.favorites[favoriteIndex].categories;
+         const entryIndex = this.entries.findIndex((item) => item.id === id);
+         const entry = this.entries[entryIndex];
+         this.user.favorites.splice(favoriteIndex, 1);
+         entry.likes.total--;
+         for (let category of categories) {
+            entry.likes[category]--;
+         }
+         console.log(categories);
+         console.log(entry.likes);
+         console.log(this.user.favorites);
       },
    },
    mounted() {
@@ -194,13 +206,13 @@ const randomLikes = (max = 100) => {
    const admiration = Math.floor((Math.random() * total) / 2);
    return {
       total: total,
-      joy: joy,
-      gratitude: gratitude,
-      serenity: serenity,
-      curiosity: curiosity,
-      inspiration: inspiration,
-      hope: hope,
       admiration: admiration,
+      curiosity: curiosity,
+      gratitude: gratitude,
+      hope: hope,
+      inspiration: inspiration,
+      joy: joy,
+      serenity: serenity,
    };
 };
 const randomEntry = () => {

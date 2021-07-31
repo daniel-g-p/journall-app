@@ -62,7 +62,8 @@ export default {
    justify-content: space-between;
    align-items: center;
    box-shadow: 0 0.25rem 0.5rem $color-shadow;
-   transition: color 0.25s ease, transform 0.25s ease;
+   transition: color 0.25s ease, transform 0.25s ease,
+      background-color 0.25s ease;
    cursor: pointer;
    &:hover {
       color: lighten($color-purple, 10%);
