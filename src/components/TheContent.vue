@@ -57,12 +57,18 @@ export default {
             id: id,
             categories: categories,
          });
+         const entry = this.entries.find((item) => item.id === id);
+         entry.likes.total++;
+         for (let category of categories) {
+            entry.likes[category]++;
+         }
+         console.log(entry);
          console.log(this.user.favorites);
       },
       removeLike(id) {
-          const index = this.user.favorites.findIndex(item => item.id === id);
-          this.user.favorites.splice(index, 1);
-      }
+         const index = this.user.favorites.findIndex((item) => item.id === id);
+         this.user.favorites.splice(index, 1);
+      },
    },
    mounted() {
       this.populateEntries();
