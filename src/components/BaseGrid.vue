@@ -1,10 +1,11 @@
 <template>
    <section class="grid">
-      <base-card
+      <base-entry
          class="grid__item"
          v-for="item in content"
          v-bind:key="item.id"
-      ></base-card>
+      >
+      </base-entry>
    </section>
 </template>
 
@@ -47,7 +48,7 @@ export default {
    &__item {
       display: block;
       width: 100%;
-      height: 24rem;
+      height: 20rem;
       background-color: $color-white;
    }
 }

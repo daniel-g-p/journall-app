@@ -113,6 +113,7 @@ export default {
    }
    &__options {
       position: absolute;
+      z-index: 10;
       left: 0;
       top: 100%;
       width: 100%;
