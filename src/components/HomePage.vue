@@ -14,7 +14,10 @@
          >
       </template>
    </base-header>
-   <entry-grid v-bind:content="entries"></entry-grid>
+   <entry-grid
+      v-bind:content="entries"
+      v-bind:userFavorites="user.favorites"
+   ></entry-grid>
 </template>
 
 <script>

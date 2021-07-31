@@ -1,5 +1,5 @@
 <template>
-   <div class="like" v-on:click="$emit('activate-circle')">
+   <div class="like" v-bind:class="buttonClass" v-on:click="clickLike">
       <div class="like__number">{{ formattedLikes }}</div>
       <svg class="like__icon" viewBox="0 0 16 16">
          <path
@@ -16,8 +16,12 @@ export default {
          type: Number,
          required: true,
       },
+      isLiked: {
+         type: Boolean,
+         required: true,
+      },
    },
-   emits: ["activate-circle"],
+   emits: ["activate-form", "remove-like"],
    computed: {
       likesDividedBy100() {
          return Math.round(this.totalLikes / 100).toString();
@@ -29,6 +33,18 @@ export default {
                  this.likesDividedBy100[this.likesDividedBy100.length - 1] +
                  "K"
             : this.totalLikes;
+      },
+      buttonClass() {
+         return { "like--active": this.isLiked };
+      },
+   },
+   methods: {
+      clickLike() {
+         if (!this.isLiked) {
+            this.$emit("activate-form");
+         } else {
+            this.$emit("remove-like");
+         }
       },
    },
 };
@@ -51,6 +67,10 @@ export default {
    &:hover {
       color: lighten($color-purple, 10%);
       transform: translateY(-0.125rem);
+   }
+   &--active {
+      background-color: $color-purple;
+      color: $color-white;
    }
    &__number {
       font-weight: 700;

@@ -14,7 +14,9 @@
          </div>
          <entry-grid-card-like
             v-bind:totalLikes="totalLikes"
-            v-on:activate-circle="toggleForm"
+            v-bind:isLiked="isLiked"
+            v-on:activate-form="toggleForm"
+            v-on:removeLike="removeLike(id)"
          ></entry-grid-card-like>
       </div>
       <div
@@ -41,7 +43,7 @@ export default {
       "entry-grid-card-like": EntryGridCardLike,
       "entry-grid-card-form": EntryGridCardForm,
    },
-   inject: ["likeEntry"],
+   inject: ["likeEntry", "removeLike"],
    props: {
       title: {
          type: String,
@@ -63,13 +65,16 @@ export default {
          type: Number,
          required: true,
       },
+      isLiked: {
+         type: Boolean,
+         required: true,
+      },
    },
    data() {
       return {
          randomNumber: Math.floor(Math.random() * 4),
          circleRadius: 0,
          formActive: false,
-         isLiked: false,
       };
    },
    computed: {
@@ -107,7 +112,6 @@ export default {
       saveEntry(categories) {
          this.likeEntry(this.id, categories);
          this.formActive = !this.formActive;
-         this.isLiked = !this.isLiked;
       },
    },
    mounted() {

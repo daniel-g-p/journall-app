@@ -17,6 +17,7 @@ export default {
          entries: this.entries,
          quotes: this.quotes,
          likeEntry: this.likeEntry,
+         removeLike: this.removeLike,
       };
    },
    data() {
@@ -56,8 +57,12 @@ export default {
             id: id,
             categories: categories,
          });
-         console.log(this.user);
+         console.log(this.user.favorites);
       },
+      removeLike(id) {
+          const index = this.user.favorites.findIndex(item => item.id === id);
+          this.user.favorites.splice(index, 1);
+      }
    },
    mounted() {
       this.populateEntries();

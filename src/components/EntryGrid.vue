@@ -9,6 +9,7 @@
          v-bind:content="item.content"
          v-bind:id="item.id"
          v-bind:totalLikes="item.likes.total"
+         v-bind:isLiked="isLiked(item.id)"
       >
       </entry-grid-card>
    </section>
@@ -25,6 +26,17 @@ export default {
       content: {
          type: Array,
          required: true,
+      },
+      userFavorites: {
+         type: Array,
+         required: true,
+      },
+   },
+   methods: {
+      isLiked(id) {
+         return this.userFavorites.findIndex((item) => item.id === id) === -1
+            ? false
+            : true;
       },
    },
 };

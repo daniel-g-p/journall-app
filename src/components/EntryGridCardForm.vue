@@ -10,7 +10,7 @@
             v-bind:id="id + '-hope'"
             v-model="selectedCategories"
          />
-         <label class="form__checkbox-label" v-bind:v-bind:for="id + '-hope'"
+         <label class="form__checkbox-label" v-bind:for="id + '-hope'"
             >Hope</label
          >
          <input
@@ -103,9 +103,11 @@ export default {
    methods: {
       saveEntry() {
          this.$emit("save-entry", this.selectedCategories);
+         this.selectedCategories = [];
       },
       cancelSave() {
          this.$emit("cancel-save");
+         this.selectedCategories = [];
       },
    },
 };
