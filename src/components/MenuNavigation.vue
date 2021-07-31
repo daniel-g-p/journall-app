@@ -97,6 +97,7 @@ export default {
    height: 100vh;
    width: 100vw;
    position: fixed;
+   z-index: 10;
    top: 0;
    right: 100%;
    display: flex;

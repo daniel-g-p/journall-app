@@ -34,6 +34,7 @@ export default {
 .toggle {
    display: block;
    position: relative;
+   z-index: 50;
    color: $color-white;
    transition: color 0.25s ease;
    width: 2rem;
