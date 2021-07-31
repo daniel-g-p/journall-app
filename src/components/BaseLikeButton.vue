@@ -1,13 +1,11 @@
 <template>
-   <div class="like">
+   <div class="like" v-on:click="$emit('activate-circle')">
       <div class="like__number">{{ formattedLikes }}</div>
-      <div class="like__icon-box">
-         <svg class="like__icon" viewBox="0 0 16 16">
-            <path
-               d="M8,1.4C3.56-3.46-7.53,5.05,8,16,23.53,5.05,12.44-3.46,8,1.4Z"
-            />
-         </svg>
-      </div>
+      <svg class="like__icon" viewBox="0 0 16 16">
+         <path
+            d="M8,1.4C3.56-3.46-7.53,5.05,8,16,23.53,5.05,12.44-3.46,8,1.4Z"
+         />
+      </svg>
    </div>
 </template>
 
@@ -19,6 +17,7 @@ export default {
          required: true,
       },
    },
+   emits: ["activate-circle"],
    computed: {
       likesDividedBy100() {
          return Math.round(this.totalLikes / 100).toString();
@@ -32,9 +31,6 @@ export default {
             : this.totalLikes;
       },
    },
-   mounted() {
-      console.log(this.likesDividedBy100);
-   },
 };
 </script>
 
@@ -45,28 +41,26 @@ export default {
    height: 2rem;
    border-radius: 1rem;
    background-color: $color-white;
+   color: $color-purple;
    display: flex;
    justify-content: space-between;
    align-items: center;
    box-shadow: 0 0.25rem 0.5rem $color-shadow;
+   transition: color 0.25s ease, transform 0.25s ease;
+   cursor: pointer;
+   &:hover {
+      color: lighten($color-purple, 10%);
+      transform: translateY(-0.125rem);
+   }
    &__number {
       font-weight: 700;
-      color: $color-purple;
       margin-left: 0.75rem;
       margin-right: 0.5rem;
    }
-   &__icon-box {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      background-color: $color-purple;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-   }
    &__icon {
       height: 1rem;
-      fill: $color-white;
+      fill: currentColor;
+      margin-right: 0.75rem;
    }
 }
 </style>

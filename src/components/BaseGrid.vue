@@ -33,7 +33,7 @@ export default {
    gap: 1rem;
    padding: 1rem 0;
    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-   grid-auto-rows: 24rem;
+   grid-auto-rows: 20rem;
    grid-auto-flow: dense;
    @include responsive($screen-mobile-m) {
       padding: 1.5rem 0;

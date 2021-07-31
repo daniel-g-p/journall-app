@@ -1,5 +1,5 @@
 <template>
-   <base-card class="entry" v-bind:modifier="entryClass">
+   <base-card class="entry" v-bind:modifier="entryClass" ref="container">
       <h2 class="entry__heading">{{ title }}</h2>
       <div class="entry__date">
          {{ date.day }} {{ date.month }} {{ date.year }}
@@ -12,8 +12,16 @@
          <div class="entry__links">
             <a v-bind:href="id" class="entry__link">Read</a>
          </div>
-         <base-like-button v-bind:totalLikes="totalLikes"></base-like-button>
+         <base-like-button
+            v-bind:totalLikes="totalLikes"
+            v-on:activate-circle="toggleCircle"
+         ></base-like-button>
       </div>
+      <div
+         class="entry__circle"
+         v-bind:class="circleClass"
+         v-bind:style="circleStyle"
+      ></div>
    </base-card>
 </template>
 
@@ -44,6 +52,8 @@ export default {
    data() {
       return {
          randomNumber: Math.floor(Math.random() * 4),
+         circleRadius: 0,
+         circleActive: false,
       };
    },
    computed: {
@@ -56,6 +66,28 @@ export default {
          }
          return output;
       },
+      circleStyle() {
+         return {
+            width: this.circleRadius * 2 + "px",
+            height: this.circleRadius * 2 + "px",
+         };
+      },
+      circleClass() {
+         return { "entry__circle--active": this.circleActive };
+      },
+   },
+   methods: {
+      setCircleRadius() {
+         const element = this.$refs.container.$el;
+         this.circleRadius =
+            (element.clientHeight ** 2 + element.clientWidth ** 2) ** 0.5;
+      },
+      toggleCircle() {
+         this.circleActive = !this.circleActive;
+      },
+   },
+   mounted() {
+      this.setCircleRadius();
    },
 };
 </script>
@@ -85,18 +117,23 @@ export default {
    }
    &__overlay {
       position: absolute;
-      bottom: 4rem;
+      bottom: 0;
       left: 0;
       width: 100%;
-      height: 3rem;
-      background-image: linear-gradient(to top, $color-white, transparent);
+      height: 7rem;
+      background-image: linear-gradient(
+         to top,
+         $color-white,
+         $color-white,
+         transparent
+      );
    }
    &__controls {
       position: absolute;
       bottom: 0;
       left: 0;
       width: 100%;
-      height: 4rem;
+      height: 3.5rem;
       background-color: $color-green-light;
       display: flex;
       justify-content: space-between;
@@ -124,11 +161,20 @@ export default {
          margin-right: 1.5rem;
       }
    }
-   &__like {
+   &__circle {
+      position: absolute;
+      bottom: 0;
+      right: 0;
       display: block;
-      width: 1rem;
-      height: 1rem;
-      background-color: red;
+      width: 10rem;
+      height: 10rem;
+      background-color: $color-purple;
+      border-radius: 50%;
+      transform: translate(50%, 50%) scale(0);
+      transition: transform 0.5s ease;
+      &--active {
+         transform: translate(50%, 50%) scale(1);
+      }
    }
 }
 </style>
