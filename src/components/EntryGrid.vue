@@ -35,6 +35,9 @@ export default {
    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
    grid-auto-rows: 20rem;
    grid-auto-flow: dense;
+   @include responsive($screen-mobile-s) {
+      grid-template-columns: repeat(auto-fit, minmax(17.5rem, 1fr));
+   }
    @include responsive($screen-mobile-m) {
       padding: 1.5rem 0;
       gap: 1.5rem;
@@ -43,6 +46,10 @@ export default {
       padding: 2.25rem 0;
       gap: 2.25rem;
    }
+   @include responsive($screen-desktop-s) {
+      grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+   }
+
    //    @include responsive($screen-mobile-l) {
    //       grid-template-columns: 1fr 1fr;
    //    }
