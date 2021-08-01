@@ -66,16 +66,6 @@ export default {
    @include responsive($screen-desktop-s) {
       grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
    }
-
-   //    @include responsive($screen-mobile-l) {
-   //       grid-template-columns: 1fr 1fr;
-   //    }
-   //    @include responsive($screen-tablet-l) {
-   //       grid-template-columns: 1fr 1fr 1fr;
-   //    }
-   //    @include responsive($screen-desktop-l) {
-   //       grid-template-columns: 1fr 1fr 1fr 1fr;
-   //    }
    &__item {
       display: block;
       width: 100%;

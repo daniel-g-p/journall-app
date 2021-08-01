@@ -1,6 +1,6 @@
 <template>
    <main class="content">
-      <home-page></home-page>
+      <home-page v-bind:content="entries" v-bind:user="user"></home-page>
    </main>
 </template>
 
@@ -23,7 +23,7 @@ export default {
    data() {
       return {
          user: {
-            username: "testuser",
+            username: "@user1",
             email: "test@journall.com",
             password: "Journall.2021",
             emailVerified: true,
@@ -41,9 +41,12 @@ export default {
    },
    methods: {
       populateEntries() {
-         for (let i = 0; i < 50; i++) {
+         for (let i = 0; i < 10; i++) {
             const entry = randomEntry();
             this.entries.push(entry);
+            if (entry.author === this.user.username) {
+               this.user.own.push(entry.id);
+            }
          }
       },
       populateQuotes() {
@@ -62,8 +65,6 @@ export default {
          for (let category of categories) {
             entry.likes[category]++;
          }
-         console.log(entry.likes);
-         console.log(this.user.favorites);
       },
       removeLike(id) {
          const favoriteIndex = this.user.favorites.findIndex(
@@ -77,9 +78,6 @@ export default {
          for (let category of categories) {
             entry.likes[category]--;
          }
-         console.log(categories);
-         console.log(entry.likes);
-         console.log(this.user.favorites);
       },
    },
    mounted() {

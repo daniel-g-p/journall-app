@@ -15,23 +15,19 @@
       </template>
    </base-header>
    <entry-grid
-      v-bind:content="entries"
+      v-bind:content="noOwn"
       v-bind:userFavorites="user.favorites"
    ></entry-grid>
 </template>
 
 <script>
 export default {
-   inject: {
+   props: {
       user: {
          type: Object,
          required: true,
       },
-      entries: {
-         type: Array,
-         required: true,
-      },
-      quotes: {
+      content: {
          type: Array,
          required: true,
       },
@@ -51,10 +47,27 @@ export default {
          selectedOption: "Anything",
       };
    },
+   computed: {
+      noFavorites() {
+         return this.content.filter(
+            (entry) => !this.user.favorites.find((item) => item.id === entry.id)
+         );
+      },
+      noOwn() {
+         return this.noFavorites.filter(
+            (entry) => !this.user.own.find((item) => item === entry.id)
+         );
+      },
+   },
    methods: {
       setOption(option) {
          this.selectedOption = option;
       },
+   },
+   updated() {
+      console.log(this.user);
+      console.log(this.noFavorites);
+      console.log(this.noOwn);
    },
 };
 </script>
