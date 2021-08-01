@@ -76,11 +76,11 @@ export default {
    left: 0;
    width: 100vw;
    height: 100vh;
-   overflow-x: hidden;
-   overflow-y: scroll;
+   overflow: hidden;
    pointer-events: none;
    &--active {
       pointer-events: all;
+      overflow-y: scroll;
       .entry__canvas {
          transition: opacity 0.25s ease 0.5s, transform 0.25s ease 0.5s;
          transform: translateX(0);
@@ -115,7 +115,7 @@ export default {
       z-index: 175;
       opacity: 0;
       transform: translateX(0.5rem);
-      transition: opacity 0.25s ease, transform 0.25s ease;
+      transition: opacity 0.25s ease, transform 0.5s ease;
    }
    &__overlay {
       position: fixed;

@@ -251,7 +251,6 @@ const randomQuote = () => {
 .content {
    background-color: $color-green-light;
    overflow-x: hidden;
-   overflow-y: scroll;
    padding: 1rem;
    @include responsive($screen-mobile-m) {
       padding: 1.5rem;

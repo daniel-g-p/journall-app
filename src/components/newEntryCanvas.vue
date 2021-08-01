@@ -3,7 +3,6 @@
       <h1 class="canvas__heading">
          The stage is yours, unleash your creativity!
       </h1>
-      <div class="canvas__inspiration">Need some inspiration?</div>
       <input class="canvas__title" type="text" placeholder="Title" />
       <textarea
          class="canvas__content"
@@ -60,12 +59,13 @@ export default {
       font-family: "Pacifico", sans-serif;
       font-size: 2.25rem;
       line-height: 1.25;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
    }
    &__title {
       font-size: 1.5rem;
       font-weight: 700;
       color: $color-green;
+      margin-bottom: 0.75rem;
       &::placeholder {
          color: rgba($color-green, 0.5);
       }

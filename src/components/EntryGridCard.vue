@@ -116,6 +116,12 @@ export default {
    },
    mounted() {
       this.setCircleRadius();
+      window.addEventListener(
+         "resize",
+         function () {
+            this.setCircleRadius();
+         }.bind(this)
+      );
    },
 };
 </script>
