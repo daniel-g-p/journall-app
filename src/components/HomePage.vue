@@ -15,7 +15,7 @@
       </template>
    </base-header>
    <entry-grid
-      v-bind:content="noOwn"
+      v-bind:content="parsedContent"
       v-bind:userFavorites="user.favorites"
    ></entry-grid>
 </template>
@@ -48,15 +48,25 @@ export default {
       };
    },
    computed: {
-      noFavorites() {
+      contentWithoutFavorites() {
          return this.content.filter(
             (entry) => !this.user.favorites.find((item) => item.id === entry.id)
          );
       },
-      noOwn() {
-         return this.noFavorites.filter(
+      contentWithoutOwn() {
+         return this.contentWithoutFavorites.filter(
             (entry) => !this.user.own.find((item) => item === entry.id)
          );
+      },
+      parsedContent() {
+         if (this.selectedOption === "Anything") {
+            return this.contentWithoutOwn;
+         } else {
+            const category = this.selectedOption.toLowerCase();
+            return this.contentWithoutOwn.filter(
+               (entry) => entry.likes[category] / entry.likes.total >= 1 / 3
+            );
+         }
       },
    },
    methods: {
@@ -66,8 +76,7 @@ export default {
    },
    updated() {
       console.log(this.user);
-      console.log(this.noFavorites);
-      console.log(this.noOwn);
+      console.log(this.parsedContent);
    },
 };
 </script>
