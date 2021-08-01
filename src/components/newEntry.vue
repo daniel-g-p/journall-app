@@ -1,7 +1,24 @@
 <template>
    <section class="entry" v-bind:class="stateClass" ref="entry">
-      <new-entry-canvas class="entry__canvas" v-model="entryData">
-      </new-entry-canvas>
+      <div class="entry__canvas">
+         <h1 class="entry__heading">
+            The stage is yours, unleash your creativity!
+         </h1>
+         <input
+            class="entry__title"
+            type="text"
+            placeholder="Title"
+            v-model="title"
+         />
+         <textarea
+            class="entry__content"
+            placeholder="Start writing here..."
+            ref="textarea"
+            v-bind:style="textareaStyle"
+            v-on:input="resizeTextArea"
+            v-model="content"
+         ></textarea>
+      </div>
       <div
          class="entry__overlay"
          v-bind:class="circleClass"
@@ -10,25 +27,27 @@
       <new-entry-button
          class="entry__button"
          v-on:toggle-canvas="activateCanvas"
+         v-on:post-entry="post"
+         v-on:save-draft="save"
+         v-on:discard-entry="discard"
       ></new-entry-button>
    </section>
 </template>
 
 <script>
 import newEntryButton from "./newEntryButton.vue";
-import newEntryCanvas from "./newEntryCanvas.vue";
 
 export default {
    components: {
       "new-entry-button": newEntryButton,
-      "new-entry-canvas": newEntryCanvas,
    },
+   inject: ["postEntry", "saveDraft", "discardEntry"],
    data() {
       return {
-         entryData: {
-            title: "",
-            content: "",
-         },
+         content: "",
+         title: "",
+         textareaElement: null,
+         textareaHeight: null,
          isActive: false,
          circleRadius: 0,
       };
@@ -36,6 +55,9 @@ export default {
    computed: {
       stateClass() {
          return { "entry--active": this.isActive };
+      },
+      textareaStyle() {
+         return { height: this.textareaHeight };
       },
       circleStyle() {
          return {
@@ -48,8 +70,23 @@ export default {
       },
    },
    methods: {
+      clearInputs() {
+         this.content = "";
+         this.title = "";
+      },
+      delayClearInputs() {
+         setTimeout(
+            function () {
+               this.clearInputs();
+            }.bind(this),
+            500
+         );
+      },
       activateCanvas() {
          this.isActive = !this.isActive;
+      },
+      resizeTextArea() {
+         this.textareaHeight = this.textareaElement.scrollHeight + "px";
       },
       setCircleRadius() {
          this.circleRadius =
@@ -57,8 +94,21 @@ export default {
                document.body.clientWidth ** 2) **
             0.5;
       },
+      post() {
+         this.postEntry(this.title, this.content);
+         this.delayClearInputs();
+      },
+      save() {
+         this.saveDraft(this.title, this.content);
+         this.delayClearInputs();
+      },
+      discard() {
+         this.discardEntry();
+         this.delayClearInputs();
+      },
    },
    mounted() {
+      this.textareaElement = this.$refs.textarea;
       this.setCircleRadius();
       window.addEventListener(
          "resize",
@@ -120,6 +170,44 @@ export default {
       opacity: 0;
       transform: translateX(0.5rem);
       transition: opacity 0.25s ease, transform 0.5s ease;
+      padding: 1rem;
+      @include responsive($screen-mobile-m) {
+         padding: 1.5rem;
+      }
+      @include responsive($screen-tablet-s) {
+         padding: 2.25rem;
+      }
+      @include responsive($screen-tablet-l) {
+         padding: 3rem;
+      }
+      @include responsive($screen-desktop-m) {
+         padding: 4.5rem;
+      }
+   }
+   &__heading {
+      font-family: "Pacifico", sans-serif;
+      font-size: 2.25rem;
+      line-height: 1.25;
+      margin-bottom: 1.5rem;
+   }
+   &__title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: $color-green;
+      margin-bottom: 0.75rem;
+      &::placeholder {
+         color: rgba($color-green, 0.5);
+      }
+   }
+   &__content {
+      width: 100%;
+      flex-grow: 1;
+      resize: none;
+      font-size: 1.25rem;
+      line-height: 1.5;
+      &::placeholder {
+         color: rgba($color-grey-25, 0.5);
+      }
    }
    &__overlay {
       position: fixed;

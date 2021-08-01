@@ -19,6 +19,8 @@ export default {
          likeEntry: this.likeEntry,
          removeLike: this.removeLike,
          postEntry: this.postEntry,
+         saveDraft: this.saveDraft,
+         discardEntry: this.discardEntry,
       };
    },
    data() {
@@ -47,10 +49,7 @@ export default {
             const entry = randomEntry();
             this.entries.push(entry);
             if (entry.author === this.user.username) {
-               this.user.own.push({
-                  id: entry.id,
-                  status: "completed",
-               });
+               this.user.own.push(entry.id);
             }
          }
       },
@@ -84,9 +83,9 @@ export default {
             entry.likes[category]--;
          }
       },
-      postEntry(title, content) {
+      createEntry(title, content) {
          const currentDate = new Date();
-         const entry = {
+         return {
             id: randomID(),
             author: this.user.username,
             date: {
@@ -120,8 +119,23 @@ export default {
                serenity: 0,
             },
          };
+      },
+      postEntry(title, content) {
+         const entry = this.createEntry(title, content);
          this.entries.push(entry);
          this.user.own.push(entry.id);
+      },
+      saveDraft(title, content) {
+         const entry = this.createEntry(title, content);
+         this.user.drafts.push(entry);
+      },
+      discardEntry(id = null) {
+         if (id) {
+            const index = this.user.drafts.findIndex((item) => item === id);
+            if (index !== -1) {
+               this.user.drafts.splice(index, 1);
+            }
+         }
       },
    },
    mounted() {
@@ -259,7 +273,6 @@ const randomLikes = (max = 10000) => {
 };
 const randomEntry = () => {
    const entry = {};
-   entry.type = "entry";
    entry.id = randomID();
    entry.author = randomUser();
    entry.date = randomDate();

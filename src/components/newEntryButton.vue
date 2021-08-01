@@ -14,7 +14,7 @@
       <button
          class="buttons__secondary buttons__secondary--1"
          v-bind:class="secondaryButtonClass"
-         v-on:click="toggleState"
+         v-on:click="postEntry"
       >
          <svg class="buttons__icon" viewBox="0 0 23 16">
             <path
@@ -25,7 +25,7 @@
       <button
          class="buttons__secondary buttons__secondary--2"
          v-bind:class="secondaryButtonClass"
-         v-on:click="toggleState"
+         v-on:click="saveDraft"
       >
          <svg class="buttons__icon" viewBox="0 0 12 16">
             <path
@@ -36,7 +36,7 @@
       <button
          class="buttons__secondary buttons__secondary--3"
          v-bind:class="secondaryButtonClass"
-         v-on:click="toggleState"
+         v-on:click="discardEntry"
       >
          <svg class="buttons__icon" viewBox="0 0 16 16">
             <path
@@ -49,7 +49,7 @@
 
 <script>
 export default {
-   emits: ["toggle-canvas"],
+   emits: ["toggle-canvas", "post-entry", "save-draft", "discard-entry"],
    data() {
       return {
          isActive: false,
@@ -67,6 +67,18 @@ export default {
       toggleState() {
          this.isActive = !this.isActive;
          this.$emit("toggle-canvas");
+      },
+      postEntry() {
+         this.toggleState();
+         this.$emit("post-entry");
+      },
+      saveDraft() {
+         this.toggleState();
+         this.$emit("save-draft");
+      },
+      discardEntry() {
+         this.toggleState();
+         this.$emit("discard-entry");
       },
    },
 };
