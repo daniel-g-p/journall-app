@@ -1,10 +1,14 @@
 <template>
-   <section class="entry" v-bind:class="stateClass">
+   <section class="entry" v-bind:class="stateClass" ref="entry">
       <new-entry-canvas class="entry__canvas"></new-entry-canvas>
-      <div class="entry__overlay"></div>
+      <div
+         class="entry__overlay"
+         v-bind:class="circleClass"
+         v-bind:style="circleStyle"
+      ></div>
       <new-entry-button
          class="entry__button"
-         v-on:activate-canvas="activateCanvas"
+         v-on:toggle-canvas="activateCanvas"
       ></new-entry-button>
    </section>
 </template>
@@ -21,17 +25,43 @@ export default {
    data() {
       return {
          isActive: false,
+         circleRadius: 0,
       };
    },
    computed: {
       stateClass() {
          return { "entry--active": this.isActive };
       },
+      circleStyle() {
+         return {
+            width: this.circleRadius * 2 + "px",
+            height: this.circleRadius * 2 + "px",
+         };
+      },
+      circleClass() {
+         return { "entry__overlay--active": this.isActive };
+      },
    },
    methods: {
       activateCanvas() {
          this.isActive = !this.isActive;
       },
+      setCircleRadius() {
+         this.circleRadius =
+            (document.body.clientHeight ** 2 +
+               document.body.clientWidth ** 2) **
+            0.5;
+      },
+   },
+   mounted() {
+      this.setCircleRadius();
+      console.log(this.setCircleRadius);
+      window.addEventListener(
+         "resize",
+         function () {
+            this.setCircleRadius();
+         }.bind(this)
+      );
    },
 };
 </script>
@@ -46,28 +76,19 @@ export default {
    left: 0;
    width: 100vw;
    height: 100vh;
+   overflow-x: hidden;
+   overflow-y: scroll;
    pointer-events: none;
-   padding: 1rem;
-   @include responsive($screen-mobile-m) {
-      padding: 1.5rem;
-   }
-   @include responsive($screen-tablet-s) {
-      padding: 2.25rem;
-   }
-   @include responsive($screen-tablet-l) {
-      padding: 3rem;
-   }
-   @include responsive($screen-desktop-m) {
-      padding: 4.5rem;
-   }
    &--active {
       pointer-events: all;
       .entry__canvas {
+         transition: opacity 0.25s ease 0.5s, transform 0.25s ease 0.5s;
+         transform: translateX(0);
          opacity: 1;
       }
    }
    &__button {
-      position: absolute;
+      position: fixed;
       z-index: 200;
       bottom: 1rem;
       right: 1rem;
@@ -93,7 +114,23 @@ export default {
       position: relative;
       z-index: 175;
       opacity: 0;
-      transition: opacity 0.25s ease;
+      transform: translateX(0.5rem);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+   }
+   &__overlay {
+      position: fixed;
+      z-index: 0;
+      top: 100%;
+      left: 100%;
+      transform: translate(-50%, -50%) scale(0);
+      display: block;
+      background-color: $color-white;
+      border-radius: 50%;
+      transition: transform 0.5s ease-out 0.25s;
+      &--active {
+         transition: transform 0.5s ease-out;
+         transform: translate(-50%, -50%) scale(1);
+      }
    }
 }
 </style>

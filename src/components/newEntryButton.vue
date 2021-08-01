@@ -44,21 +44,15 @@
             />
          </svg>
       </button>
-      <div
-         class="overlay"
-         v-bind:class="circleClass"
-         v-bind:style="circleStyle"
-      ></div>
    </div>
 </template>
 
 <script>
 export default {
-   emits: ["activate-canvas"],
+   emits: ["toggle-canvas"],
    data() {
       return {
          isActive: false,
-         circleRadius: 0,
       };
    },
    computed: {
@@ -68,32 +62,12 @@ export default {
       secondaryButtonClass() {
          return { "buttons__secondary--active": this.isActive };
       },
-      circleStyle() {
-         return {
-            width: this.circleRadius * 2 + "px",
-            height: this.circleRadius * 2 + "px",
-         };
-      },
-      circleClass() {
-         return { "overlay--active": this.isActive };
-      },
    },
    methods: {
       toggleState() {
          this.isActive = !this.isActive;
-         if (this.isActive) {
-            this.$emit("activate-canvas");
-         }
+         this.$emit("toggle-canvas");
       },
-      setCircleRadius() {
-         this.circleRadius =
-            (document.body.clientHeight ** 2 +
-               document.body.clientWidth ** 2) **
-            0.5;
-      },
-   },
-   mounted() {
-      this.setCircleRadius();
    },
 };
 </script>
