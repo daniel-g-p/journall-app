@@ -45,7 +45,10 @@ export default {
             const entry = randomEntry();
             this.entries.push(entry);
             if (entry.author === this.user.username) {
-               this.user.own.push(entry.id);
+               this.user.own.push({
+                  id: entry.id,
+                  status: "completed",
+               });
             }
          }
       },
@@ -193,7 +196,7 @@ const randomContent = (min = 1, max = 5) => {
    }
    return content.trim();
 };
-const randomLikes = (max = 100) => {
+const randomLikes = (max = 10000) => {
    const total = Math.floor(Math.random() * max) + 1;
    const joy = Math.floor((Math.random() * total) / 2);
    const gratitude = Math.floor((Math.random() * total) / 2);

@@ -18,6 +18,7 @@
       v-bind:content="parsedContent"
       v-bind:userFavorites="user.favorites"
    ></entry-grid>
+   <new-entry></new-entry>
 </template>
 
 <script>
@@ -55,7 +56,7 @@ export default {
       },
       contentWithoutOwn() {
          return this.contentWithoutFavorites.filter(
-            (entry) => !this.user.own.find((item) => item === entry.id)
+            (entry) => !this.user.own.find((item) => item.id === entry.id)
          );
       },
       parsedContent() {
@@ -73,10 +74,6 @@ export default {
       setOption(option) {
          this.selectedOption = option;
       },
-   },
-   updated() {
-      console.log(this.user);
-      console.log(this.parsedContent);
    },
 };
 </script>
