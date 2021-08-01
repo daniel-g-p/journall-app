@@ -73,6 +73,7 @@ export default {
    data() {
       return {
          randomNumber: Math.floor(Math.random() * 4),
+         container: null,
          circleRadius: 0,
          formActive: false,
       };
@@ -102,9 +103,10 @@ export default {
    },
    methods: {
       setCircleRadius() {
-         const element = this.$refs.container.$el;
          this.circleRadius =
-            (element.clientHeight ** 2 + element.clientWidth ** 2) ** 0.5;
+            (this.container.clientHeight ** 2 +
+               this.container.clientWidth ** 2) **
+            0.5;
       },
       toggleForm() {
          this.formActive = !this.formActive;
@@ -115,6 +117,7 @@ export default {
       },
    },
    mounted() {
+      this.container = this.$refs.container.$el;
       this.setCircleRadius();
       window.addEventListener(
          "resize",

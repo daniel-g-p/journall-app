@@ -18,6 +18,7 @@ export default {
          quotes: this.quotes,
          likeEntry: this.likeEntry,
          removeLike: this.removeLike,
+         postEntry: this.postEntry,
       };
    },
    data() {
@@ -34,6 +35,7 @@ export default {
             },
             favorites: [],
             own: [],
+            drafts: [],
          },
          entries: [],
          quotes: [],
@@ -81,6 +83,45 @@ export default {
          for (let category of categories) {
             entry.likes[category]--;
          }
+      },
+      postEntry(title, content) {
+         const currentDate = new Date();
+         const entry = {
+            id: randomID(),
+            author: this.user.username,
+            date: {
+               day: currentDate.getDate(),
+               month: [
+                  "January",
+                  "February",
+                  "March",
+                  "April",
+                  "May",
+                  "June",
+                  "July",
+                  "August",
+                  "September",
+                  "October",
+                  "November",
+                  "December",
+               ][currentDate.getMonth()],
+               year: currentDate.getFullYear(),
+            },
+            title: title,
+            content: content,
+            likes: {
+               total: 0,
+               admiration: 0,
+               curiosity: 0,
+               gratitude: 0,
+               hope: 0,
+               inspiration: 0,
+               joy: 0,
+               serenity: 0,
+            },
+         };
+         this.entries.push(entry);
+         this.user.own.push(entry.id);
       },
    },
    mounted() {

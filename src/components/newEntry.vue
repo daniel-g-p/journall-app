@@ -1,6 +1,7 @@
 <template>
    <section class="entry" v-bind:class="stateClass" ref="entry">
-      <new-entry-canvas class="entry__canvas"></new-entry-canvas>
+      <new-entry-canvas class="entry__canvas" v-model="entryData">
+      </new-entry-canvas>
       <div
          class="entry__overlay"
          v-bind:class="circleClass"
@@ -24,6 +25,10 @@ export default {
    },
    data() {
       return {
+         entryData: {
+            title: "",
+            content: "",
+         },
          isActive: false,
          circleRadius: 0,
       };
@@ -55,7 +60,6 @@ export default {
    },
    mounted() {
       this.setCircleRadius();
-      console.log(this.setCircleRadius);
       window.addEventListener(
          "resize",
          function () {

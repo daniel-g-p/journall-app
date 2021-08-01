@@ -56,7 +56,7 @@ export default {
       },
       contentWithoutOwn() {
          return this.contentWithoutFavorites.filter(
-            (entry) => !this.user.own.find((item) => item.id === entry.id)
+            (entry) => !this.user.own.find((item) => item === entry.id)
          );
       },
       parsedContent() {

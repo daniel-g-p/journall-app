@@ -3,19 +3,29 @@
       <h1 class="canvas__heading">
          The stage is yours, unleash your creativity!
       </h1>
-      <input class="canvas__title" type="text" placeholder="Title" />
+      <input
+         class="canvas__title"
+         type="text"
+         placeholder="Title"
+         v-bind:value="title"
+      />
       <textarea
          class="canvas__content"
          placeholder="Start writing here..."
          ref="textarea"
          v-bind:style="textareaStyle"
-         v-on:input="resizeTextArea()"
       ></textarea>
    </div>
 </template>
 
 <script>
 export default {
+   props: {
+      title: {
+         type: String,
+         required: false,
+      },
+   },
    data() {
       return {
          textareaElement: null,
@@ -30,6 +40,9 @@ export default {
    methods: {
       resizeTextArea() {
          this.textareaHeight = this.textareaElement.scrollHeight + "px";
+      },
+      updateEntryData() {
+         this;
       },
    },
    mounted() {
