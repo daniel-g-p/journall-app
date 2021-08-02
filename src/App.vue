@@ -1,4 +1,10 @@
 <template>
+   <base-alert
+      v-bind:message="alertMessage"
+      v-bind:type="alertType"
+      v-bind:isActive="alertActive"
+      v-on:deactivate-alert="closeAlert"
+   ></base-alert>
    <the-menu></the-menu>
    <the-content></the-content>
 </template>
@@ -11,6 +17,47 @@ export default {
    components: {
       "the-menu": TheMenu,
       "the-content": TheContent,
+   },
+   provide() {
+      return {
+         emitAlert: this.emitAlert,
+      };
+   },
+   data() {
+      return {
+         alertMessage: "",
+         alertType: "",
+         alertActive: false,
+      };
+   },
+   methods: {
+      closeAlert() {
+         this.alertActive = false;
+         setTimeout(
+            function () {
+               this.alertMessage = "";
+               this.alertType = "";
+            }.bind(this),
+            250
+         );
+      },
+      emitAlert(message, type) {
+         this.alertActive = true;
+         this.alertMessage = message;
+         this.alertType = type;
+      },
+   },
+   watch: {
+      alertActive(value) {
+         if (value) {
+            setTimeout(
+               function () {
+                  this.alertActive = false;
+               }.bind(this),
+               5000
+            );
+         }
+      },
    },
 };
 </script>

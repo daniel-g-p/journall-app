@@ -44,7 +44,7 @@ export default {
       "new-entry-button": newEntryButton,
       "new-entry-idea": newEntryIdea,
    },
-   inject: ["postEntry", "saveDraft", "discardEntry"],
+   inject: ["postEntry", "saveDraft", "discardEntry", "emitAlert"],
    data() {
       return {
          content: "",

@@ -93,6 +93,7 @@ export default {
    }
    &__text {
       margin-left: 0.5em;
+      font-weight: 700;
    }
 }
 </style>

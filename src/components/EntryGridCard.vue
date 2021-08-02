@@ -43,7 +43,7 @@ export default {
       "entry-grid-card-like": EntryGridCardLike,
       "entry-grid-card-form": EntryGridCardForm,
    },
-   inject: ["likeEntry", "removeLike"],
+   inject: ["likeEntry", "removeLike", "emitAlert"],
    props: {
       title: {
          type: String,
@@ -112,6 +112,7 @@ export default {
          this.formActive = !this.formActive;
       },
       saveEntry(categories) {
+         this.emitAlert("Saved to favorites", "success");
          this.likeEntry(this.id, categories);
          this.formActive = !this.formActive;
       },

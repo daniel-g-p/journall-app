@@ -45,6 +45,7 @@
          </svg>
       </button>
    </div>
+   <div class=""></div>
 </template>
 
 <script>
@@ -70,9 +71,14 @@ export default {
       },
       postEntry() {
          this.toggleState();
+         this.emitAlert(
+            "Your new entry has been posted, you can view and edit it under 'My Entries'",
+            "success"
+         );
          this.$emit("post-entry");
       },
       saveDraft() {
+         this.emitAlert("Saved to drafts", "success");
          this.toggleState();
          this.$emit("save-draft");
       },
