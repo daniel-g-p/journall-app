@@ -1,25 +1,13 @@
 <template>
    <section class="entry" v-bind:class="stateClass" ref="entry">
+      <base-confirm-card class="entry__confirm-card">
+         <template v-slot:default
+            >Are you sure that you want to discard this entry?</template
+         >
+         <template v-slot:confirm-button>Discard</template>
+         <template v-slot:cancel-button>Cancel</template>
+      </base-confirm-card>
       <div class="entry__canvas">
-         <div class="confirm-discard">
-            <p class="confirm-discard__text"></p>
-            <div class="confirm-discard__buttons">
-               <button
-                  class="
-                     confirm-discard__button confirm-discard__button--outline
-                  "
-               >
-                  Discard
-               </button>
-               <button
-                  class="
-                     confirm-discard__button confirm-discard__button--outline
-                  "
-               >
-                  Cancel
-               </button>
-            </div>
-         </div>
          <h1 class="entry__heading">
             The stage is yours, unleash your creativity!
          </h1>
@@ -262,12 +250,5 @@ export default {
          transform: translate(-50%, -50%) scale(1);
       }
    }
-}
-
-.confirm-discard {
-   position: absolute;
-   width: 100%;
-   max-width: 24rem;
-   background-color: $color-purple;
 }
 </style>
