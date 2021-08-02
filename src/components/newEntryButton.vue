@@ -71,14 +71,9 @@ export default {
       },
       postEntry() {
          this.toggleState();
-         this.emitAlert(
-            "Your new entry has been posted, you can view and edit it under 'My Entries'",
-            "success"
-         );
          this.$emit("post-entry");
       },
       saveDraft() {
-         this.emitAlert("Saved to drafts", "success");
          this.toggleState();
          this.$emit("save-draft");
       },
@@ -96,6 +91,27 @@ export default {
 .buttons {
    width: 4.5rem;
    height: 4.5rem;
+   position: fixed;
+   z-index: 200;
+   bottom: 1rem;
+   right: 1rem;
+   pointer-events: all;
+   @include responsive($screen-mobile-m) {
+      bottom: 1.5rem;
+      right: 1.5rem;
+   }
+   @include responsive($screen-tablet-s) {
+      bottom: 2.25rem;
+      right: 2.25rem;
+   }
+   @include responsive($screen-tablet-l) {
+      bottom: 3rem;
+      right: 3rem;
+   }
+   @include responsive($screen-desktop-m) {
+      bottom: 4.5rem;
+      right: 4.5rem;
+   }
    &__main,
    &__secondary {
       border-radius: 50%;

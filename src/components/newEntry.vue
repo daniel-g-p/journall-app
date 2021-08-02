@@ -1,6 +1,25 @@
 <template>
    <section class="entry" v-bind:class="stateClass" ref="entry">
       <div class="entry__canvas">
+         <div class="confirm-discard">
+            <p class="confirm-discard__text"></p>
+            <div class="confirm-discard__buttons">
+               <button
+                  class="
+                     confirm-discard__button confirm-discard__button--outline
+                  "
+               >
+                  Discard
+               </button>
+               <button
+                  class="
+                     confirm-discard__button confirm-discard__button--outline
+                  "
+               >
+                  Cancel
+               </button>
+            </div>
+         </div>
          <h1 class="entry__heading">
             The stage is yours, unleash your creativity!
          </h1>
@@ -26,7 +45,6 @@
          v-bind:style="circleStyle"
       ></div>
       <new-entry-button
-         class="entry__button"
          v-on:toggle-canvas="activateCanvas"
          v-on:post-entry="post"
          v-on:save-draft="save"
@@ -104,12 +122,42 @@ export default {
          if (this.inputsValid) {
             this.postEntry(this.title, this.content);
             this.delayClearInputs();
+            this.emitAlert(
+               "Congrats, Your new entry has been posted! You can still make changes to it under 'My Entries'.",
+               "success"
+            );
+         } else if (this.title) {
+            this.saveDraft(this.title, this.content);
+            this.emitAlert(
+               "Oops, Looks like your new entry was missing its content. No worries, it's saved as a draft under 'My Entries' for you to finish it off!",
+               "success"
+            );
+         } else if (this.content) {
+            this.saveDraft(this.title, this.content);
+            this.emitAlert(
+               "Oops, Looks like your new entry was missing a title. No worries, it's saved as a draft under 'My Entries' for you to finish it off!",
+               "success"
+            );
+         } else {
+            this.emitAlert(
+               "Please add at least a title or some content to save your entry as a draft.",
+               "error"
+            );
          }
       },
       save() {
-         if (this.inputsValid) {
+         if (this.inputsValid || this.title || this.text) {
             this.saveDraft(this.title, this.content);
             this.delayClearInputs();
+            this.emitAlert(
+               "Your new entry has been saved to your drafts under 'My Entries'. Get some rest and pick it back up later!",
+               "success"
+            );
+         } else {
+            this.emitAlert(
+               "Please add at least a title or some content to save your entry as a draft.",
+               "error"
+            );
          }
       },
       discard() {
@@ -149,29 +197,6 @@ export default {
          transition: opacity 0.25s ease 0.5s, transform 0.25s ease 0.5s;
          transform: translateX(0);
          opacity: 1;
-      }
-   }
-   &__button {
-      position: fixed;
-      z-index: 200;
-      bottom: 1rem;
-      right: 1rem;
-      pointer-events: all;
-      @include responsive($screen-mobile-m) {
-         bottom: 1.5rem;
-         right: 1.5rem;
-      }
-      @include responsive($screen-tablet-s) {
-         bottom: 2.25rem;
-         right: 2.25rem;
-      }
-      @include responsive($screen-tablet-l) {
-         bottom: 3rem;
-         right: 3rem;
-      }
-      @include responsive($screen-desktop-m) {
-         bottom: 4.5rem;
-         right: 4.5rem;
       }
    }
    &__canvas {
@@ -237,5 +262,12 @@ export default {
          transform: translate(-50%, -50%) scale(1);
       }
    }
+}
+
+.confirm-discard {
+   position: absolute;
+   width: 100%;
+   max-width: 24rem;
+   background-color: $color-purple;
 }
 </style>
