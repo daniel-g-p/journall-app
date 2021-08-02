@@ -4,6 +4,7 @@
          <h1 class="entry__heading">
             The stage is yours, unleash your creativity!
          </h1>
+         <new-entry-idea class="entry__idea"></new-entry-idea>
          <input
             class="entry__title"
             type="text"
@@ -36,10 +37,12 @@
 
 <script>
 import newEntryButton from "./newEntryButton.vue";
+import newEntryIdea from "./newEntryIdea.vue";
 
 export default {
    components: {
       "new-entry-button": newEntryButton,
+      "new-entry-idea": newEntryIdea,
    },
    inject: ["postEntry", "saveDraft", "discardEntry"],
    data() {
@@ -68,6 +71,9 @@ export default {
       circleClass() {
          return { "entry__overlay--active": this.isActive };
       },
+      inputsValid() {
+         return this.content && this.title ? true : false;
+      },
    },
    methods: {
       clearInputs() {
@@ -95,12 +101,16 @@ export default {
             0.5;
       },
       post() {
-         this.postEntry(this.title, this.content);
-         this.delayClearInputs();
+         if (this.inputsValid) {
+            this.postEntry(this.title, this.content);
+            this.delayClearInputs();
+         }
       },
       save() {
-         this.saveDraft(this.title, this.content);
-         this.delayClearInputs();
+         if (this.inputsValid) {
+            this.saveDraft(this.title, this.content);
+            this.delayClearInputs();
+         }
       },
       discard() {
          this.discardEntry();
@@ -188,6 +198,9 @@ export default {
       font-family: "Pacifico", sans-serif;
       font-size: 2.25rem;
       line-height: 1.25;
+      margin-bottom: 1.5rem;
+   }
+   &__idea {
       margin-bottom: 1.5rem;
    }
    &__title {
