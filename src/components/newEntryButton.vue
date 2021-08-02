@@ -3,7 +3,7 @@
       <button
          class="buttons__main"
          v-bind:class="mainButtonClass"
-         v-on:click="toggleState"
+         v-on:click="$emit('toggle-canvas')"
       >
          <svg class="buttons__icon" viewBox="0 0 16 16">
             <path
@@ -50,12 +50,13 @@
 
 <script>
 export default {
-   emits: ["toggle-canvas", "post-entry", "save-draft", "discard-entry"],
-   data() {
-      return {
-         isActive: false,
-      };
+   props: {
+      isActive: {
+         type: Boolean,
+         required: true,
+      },
    },
+   emits: ["toggle-canvas", "post-entry", "save-draft", "discard-entry"],
    computed: {
       mainButtonClass() {
          return { "buttons__main--inactive": this.isActive };
@@ -65,20 +66,13 @@ export default {
       },
    },
    methods: {
-      toggleState() {
-         this.isActive = !this.isActive;
-         this.$emit("toggle-canvas");
-      },
       postEntry() {
-         this.toggleState();
          this.$emit("post-entry");
       },
       saveDraft() {
-         this.toggleState();
          this.$emit("save-draft");
       },
       discardEntry() {
-         this.toggleState();
          this.$emit("discard-entry");
       },
    },

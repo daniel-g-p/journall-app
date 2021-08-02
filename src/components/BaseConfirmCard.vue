@@ -1,5 +1,5 @@
 <template>
-   <div class="modal">
+   <div class="modal" v-bind:class="modalState">
       <base-card class="modal__content">
          <p class="modal__text">
             <slot></slot>
@@ -31,13 +31,18 @@ export default {
       },
    },
    emits: ["confirm", "cancel"],
+   computed: {
+      modalState() {
+         return { "modal--active": this.isActive };
+      },
+   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import "../scss/abstracts.scss";
 .modal {
-   backdrop-filter: blur(0.25rem);
+   backdrop-filter: blur(0.5rem);
    width: 100vw;
    height: 100vh;
    position: fixed;

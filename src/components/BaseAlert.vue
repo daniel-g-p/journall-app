@@ -55,28 +55,28 @@ export default {
    width: 100vw;
    padding: 1.5rem;
    box-shadow: 0 0.5rem 1rem $color-shadow;
-   background-color: $color-white;
+   color: $color-white;
    display: grid;
    grid-template-columns: 1fr 1rem;
    gap: 0 1rem;
    transform: translateY(-100%);
    transition: transform 0.25s ease;
    &--success {
-      color: $color-green;
+      background-color: $color-green;
    }
    &--error {
-      color: $color-red;
+      background-color: $color-red;
    }
    &--active {
       transform: translateY(0);
    }
    &__close {
       height: 1rem;
-      fill: $color-grey-75;
+      fill: $color-white;
       transition: fill 0.25s ease;
       cursor: pointer;
       &:hover {
-         fill: lighten($color-grey-75, 10%);
+         fill: darken($color-white, 10%);
       }
    }
 }

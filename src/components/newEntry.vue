@@ -38,7 +38,8 @@
          v-bind:style="circleStyle"
       ></div>
       <new-entry-button
-         v-on:toggle-canvas="activateCanvas"
+         v-bind:isActive="buttonsActive"
+         v-on:toggle-canvas="toggleCanvas"
          v-on:post-entry="post"
          v-on:save-draft="save"
          v-on:discard-entry="toggleDiscardConfirmation"
@@ -55,7 +56,13 @@ export default {
       "new-entry-button": newEntryButton,
       "new-entry-idea": newEntryIdea,
    },
-   inject: ["postEntry", "saveDraft", "discardEntry", "emitAlert"],
+   inject: [
+      "postEntry",
+      "saveDraft",
+      "discardEntry",
+      "emitAlert",
+      "closeAlert",
+   ],
    data() {
       return {
          content: "",
@@ -64,6 +71,7 @@ export default {
          textareaHeight: null,
          isActive: false,
          circleRadius: 0,
+         buttonsActive: false,
          confirmDiscardActive: false,
       };
    },
@@ -100,8 +108,15 @@ export default {
             500
          );
       },
-      activateCanvas() {
+      toggleButtons() {
+         this.buttonsActive = !this.buttonsActive;
+      },
+      toggleCanvas() {
          this.isActive = !this.isActive;
+         this.buttonsActive = !this.buttonsActive;
+         if (this.isActive) {
+            this.closeAlert();
+         }
       },
       resizeTextArea() {
          this.textareaHeight = this.textareaElement.scrollHeight + "px";
@@ -113,9 +128,9 @@ export default {
             0.5;
       },
       post() {
+         this.toggleCanvas();
          if (this.inputsValid) {
             this.postEntry(this.title, this.content);
-            this.delayClearInputs();
             this.emitAlert(
                "Congrats, Your new entry has been posted! You can still make changes to it under 'My Entries'.",
                "success"
@@ -124,23 +139,25 @@ export default {
             this.saveDraft(this.title, this.content);
             this.emitAlert(
                "Oops, Looks like your new entry was missing its content. No worries, it's saved as a draft under 'My Entries' for you to finish it off!",
-               "success"
+               "error"
             );
          } else if (this.content) {
             this.saveDraft(this.title, this.content);
             this.emitAlert(
                "Oops, Looks like your new entry was missing a title. No worries, it's saved as a draft under 'My Entries' for you to finish it off!",
-               "success"
+               "error"
             );
          } else {
             this.emitAlert(
-               "Please add at least a title or some content to save your entry as a draft.",
+               "Please add at least a title or some content to post a new entry.",
                "error"
             );
          }
+         this.delayClearInputs();
       },
       save() {
-         if (this.inputsValid || this.title || this.text) {
+         this.toggleCanvas();
+         if (this.inputsValid || this.title || this.content) {
             this.saveDraft(this.title, this.content);
             this.delayClearInputs();
             this.emitAlert(
@@ -155,11 +172,20 @@ export default {
          }
       },
       toggleDiscardConfirmation() {
-         this.confirmDiscardActive = !this.confirmDiscardActive;
+         if (this.title || this.content) {
+            this.confirmDiscardActive = !this.confirmDiscardActive;
+         } else {
+            this.toggleCanvas();
+         }
       },
       handleDiscard(response = null) {
          if (response === "confirm") {
             this.discard();
+            this.toggleCanvas();
+            this.emitAlert(
+               "Your new entry has been discarded.",
+               "success"
+            );
          }
          this.toggleDiscardConfirmation();
       },

@@ -21,6 +21,7 @@ export default {
    provide() {
       return {
          emitAlert: this.emitAlert,
+         closeAlert: this.closeAlert,
       };
    },
    data() {
