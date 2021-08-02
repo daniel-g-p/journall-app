@@ -5,10 +5,16 @@
             <slot></slot>
          </p>
          <div class="modal__buttons">
-            <button class="modal__button modal__button--fill">
+            <button
+               class="modal__button modal__button--fill"
+               v-on:click="$emit('confirm')"
+            >
                <slot name="confirm-button"></slot>
             </button>
-            <button class="modal__button modal__button--outline">
+            <button
+               class="modal__button modal__button--outline"
+               v-on:click="$emit('cancel')"
+            >
                <slot name="cancel-button"></slot>
             </button>
          </div>
@@ -17,7 +23,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+   props: {
+      isActive: {
+         type: Boolean,
+         required: true,
+      },
+   },
+   emits: ["confirm", "cancel"],
+};
 </script>
 
 <style lang="scss" scoped>

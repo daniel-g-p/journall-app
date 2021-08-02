@@ -1,6 +1,11 @@
 <template>
    <section class="entry" v-bind:class="stateClass" ref="entry">
-      <base-confirm-card class="entry__confirm-card">
+      <base-confirm-card
+         class="entry__confirm-card"
+         v-bind:isActive="confirmDiscardActive"
+         v-on:confirm="handleDiscard('confirm')"
+         v-on:cancel="handleDiscard()"
+      >
          <template v-slot:default
             >Are you sure that you want to discard this entry?</template
          >
@@ -36,7 +41,7 @@
          v-on:toggle-canvas="activateCanvas"
          v-on:post-entry="post"
          v-on:save-draft="save"
-         v-on:discard-entry="discard"
+         v-on:discard-entry="toggleDiscardConfirmation"
       ></new-entry-button>
    </section>
 </template>
@@ -59,6 +64,7 @@ export default {
          textareaHeight: null,
          isActive: false,
          circleRadius: 0,
+         confirmDiscardActive: false,
       };
    },
    computed: {
@@ -147,6 +153,15 @@ export default {
                "error"
             );
          }
+      },
+      toggleDiscardConfirmation() {
+         this.confirmDiscardActive = !this.confirmDiscardActive;
+      },
+      handleDiscard(response = null) {
+         if (response === "confirm") {
+            this.discard();
+         }
+         this.toggleDiscardConfirmation();
       },
       discard() {
          this.discardEntry();
