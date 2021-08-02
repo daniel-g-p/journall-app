@@ -29,6 +29,7 @@ export default {
          alertMessage: "",
          alertType: "",
          alertActive: false,
+         alertCount: 0,
       };
    },
    methods: {
@@ -46,18 +47,21 @@ export default {
          this.alertActive = true;
          this.alertMessage = message;
          this.alertType = type;
+         this.alertCount++;
       },
    },
    watch: {
-      alertActive(value) {
-         if (value) {
-            setTimeout(
-               function () {
-                  this.alertActive = false;
-               }.bind(this),
-               5000
-            );
-         }
+      alertCount(value) {
+         const count = value;
+         setTimeout(
+            function () {
+               if (this.alertCount === count) {
+                  this.closeAlert();
+                  this.alertCount = 0;
+               }
+            }.bind(this),
+            5000
+         );
       },
    },
 };

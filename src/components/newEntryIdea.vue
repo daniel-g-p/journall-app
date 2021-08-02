@@ -13,9 +13,15 @@
 
 <script>
 export default {
+   props: {
+      ideaText: {
+         type: String,
+         required: true,
+      },
+   },
+   emits: ["update-idea"],
    data() {
       return {
-         ideaText: "Need some inspiration? Click here!",
          ideas: [
             "Recognize a mistake that you made in the past and the lesson that it taught you.",
             "Compare today's version of you to the version from a year ago.",
@@ -57,8 +63,10 @@ export default {
    },
    methods: {
       generateIdea() {
-         this.ideaText =
-            this.ideas[Math.floor(Math.random() * this.ideasLength)];
+         this.$emit(
+            "update-idea",
+            this.ideas[Math.floor(Math.random() * this.ideasLength)]
+         );
       },
    },
 };

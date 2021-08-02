@@ -16,7 +16,11 @@
          <h1 class="entry__heading">
             The stage is yours, unleash your creativity!
          </h1>
-         <new-entry-idea class="entry__idea"></new-entry-idea>
+         <new-entry-idea
+            class="entry__idea"
+            v-bind:ideaText="ideaText"
+            v-on:update-idea="updateIdeatext"
+         ></new-entry-idea>
          <input
             class="entry__title"
             type="text"
@@ -73,6 +77,7 @@ export default {
          circleRadius: 0,
          buttonsActive: false,
          confirmDiscardActive: false,
+         ideaText: "Need some inspiration? Click here!",
       };
    },
    computed: {
@@ -99,14 +104,8 @@ export default {
       clearInputs() {
          this.content = "";
          this.title = "";
-      },
-      delayClearInputs() {
-         setTimeout(
-            function () {
-               this.clearInputs();
-            }.bind(this),
-            500
-         );
+         this.updateIdeatext();
+         this.textareaHeight = null;
       },
       toggleButtons() {
          this.buttonsActive = !this.buttonsActive;
@@ -117,6 +116,12 @@ export default {
          if (this.isActive) {
             this.closeAlert();
          }
+         setTimeout(
+            function () {
+               this.clearInputs();
+            }.bind(this),
+            500
+         );
       },
       resizeTextArea() {
          this.textareaHeight = this.textareaElement.scrollHeight + "px";
@@ -153,13 +158,11 @@ export default {
                "error"
             );
          }
-         this.delayClearInputs();
       },
       save() {
          this.toggleCanvas();
          if (this.inputsValid || this.title || this.content) {
             this.saveDraft(this.title, this.content);
-            this.delayClearInputs();
             this.emitAlert(
                "Your new entry has been saved to your drafts under 'My Entries'. Get some rest and pick it back up later!",
                "success"
@@ -182,16 +185,15 @@ export default {
          if (response === "confirm") {
             this.discard();
             this.toggleCanvas();
-            this.emitAlert(
-               "Your new entry has been discarded.",
-               "success"
-            );
+            this.emitAlert("Your new entry has been discarded.", "success");
          }
          this.toggleDiscardConfirmation();
       },
       discard() {
          this.discardEntry();
-         this.delayClearInputs();
+      },
+      updateIdeatext(text = "Need some inspiration? Click here!") {
+         this.ideaText = text;
       },
    },
    mounted() {
