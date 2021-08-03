@@ -46,6 +46,7 @@ export default {
 @import "../scss/abstracts.scss";
 
 .grid {
+   position: relative;
    display: grid;
    gap: 1rem;
    padding: 1rem 0;

@@ -57,13 +57,13 @@
 </template>
 
 <script>
-import newEntryButton from "./newEntryButton.vue";
-import newEntryIdea from "./newEntryIdea.vue";
+import NewEntryButton from "./NewEntryButton.vue";
+import NewEntryIdea from "./NewEntryIdea.vue";
 
 export default {
    components: {
-      "new-entry-button": newEntryButton,
-      "new-entry-idea": newEntryIdea,
+      "new-entry-button": NewEntryButton,
+      "new-entry-idea": NewEntryIdea,
    },
    inject: [
       "postEntry",

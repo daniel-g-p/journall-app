@@ -15,7 +15,12 @@
       <div class="entry__overlay"></div>
       <div class="entry__controls">
          <div class="entry__links">
-            <a v-bind:href="id" class="entry__link">Read</a>
+            <a
+               v-bind:href="id"
+               class="entry__link"
+               v-on:click.prevent="toggleReadingArea"
+               >Read</a
+            >
          </div>
          <entry-grid-card-like
             v-bind:totalLikes="totalLikes"
@@ -37,7 +42,16 @@
          v-bind:id="id"
          v-on:save-entry="saveEntry"
          v-on:cancel-save="toggleForm"
-      ></entry-grid-card-form>
+      >
+      </entry-grid-card-form>
+      <reading-area
+         v-if="readingAreaVisible"
+         v-bind:title="title"
+         v-bind:date="date"
+         v-bind:content="content"
+         v-bind:isActive="readingAreaActive"
+         v-on:toggle-reading-area="toggleReadingArea"
+      ></reading-area>
    </base-card>
 </template>
 
@@ -85,6 +99,8 @@ export default {
          circleRadius: 0,
          formActive: false,
          formVisible: false,
+         readingAreaVisible: false,
+         readingAreaActive: false,
       };
    },
    computed: {
@@ -147,6 +163,25 @@ export default {
             }.bind(this),
             500
          );
+      },
+      toggleReadingArea() {
+         if (this.readingAreaVisible) {
+            this.readingAreaActive = false;
+            setTimeout(
+               function () {
+                  this.readingAreaVisible = false;
+               }.bind(this),
+               500
+            );
+         } else {
+            this.readingAreaVisible = true;
+            setTimeout(
+               function () {
+                  this.readingAreaActive = true;
+               }.bind(this),
+               0
+            );
+         }
       },
    },
    mounted() {

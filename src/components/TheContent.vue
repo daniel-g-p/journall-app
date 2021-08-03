@@ -303,6 +303,7 @@ const randomQuote = () => {
 @import "../scss/abstracts.scss";
 
 .content {
+   position: relative;
    background-color: $color-green-light;
    overflow-x: hidden;
    padding: 1rem;
