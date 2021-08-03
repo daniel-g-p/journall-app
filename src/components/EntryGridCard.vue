@@ -1,5 +1,10 @@
 <template>
-   <base-card class="entry" v-bind:modifier="entryClass" ref="container">
+   <base-card
+      class="entry"
+      v-bind:class="entryVisibility"
+      v-bind:modifier="entryStyle"
+      ref="container"
+   >
       <h2 class="entry__heading">{{ title }}</h2>
       <div class="entry__date">
          {{ date.day }} {{ date.month }} {{ date.year }}
@@ -20,11 +25,13 @@
          ></entry-grid-card-like>
       </div>
       <div
+         v-if="formVisible"
          class="entry__circle"
          v-bind:class="circleClass"
          v-bind:style="circleStyle"
       ></div>
       <entry-grid-card-form
+         v-if="formVisible"
          class="entry__form"
          v-bind:class="formClass"
          v-bind:id="id"
@@ -72,14 +79,16 @@ export default {
    },
    data() {
       return {
+         entryFaded: false,
          randomNumber: Math.floor(Math.random() * 4),
          container: null,
          circleRadius: 0,
          formActive: false,
+         formVisible: false,
       };
    },
    computed: {
-      entryClass() {
+      entryStyle() {
          let output;
          if (this.randomNumber === 0) {
             output = "horizontal";
@@ -87,6 +96,9 @@ export default {
             output = "vertical";
          }
          return output;
+      },
+      entryVisibility() {
+         return { "entry--faded": this.entryFaded };
       },
       circleStyle() {
          return {
@@ -109,12 +121,32 @@ export default {
             0.5;
       },
       toggleForm() {
-         this.formActive = !this.formActive;
+         if (!this.formVisible) {
+            this.formVisible = true;
+         } else {
+            setTimeout(
+               function () {
+                  this.formVisible = false;
+               }.bind(this),
+               750
+            );
+         }
+         setTimeout(
+            function () {
+               this.formActive = !this.formActive;
+            }.bind(this),
+            0
+         );
       },
       saveEntry(categories) {
-         this.emitAlert("Saved to favorites", "success");
-         this.likeEntry(this.id, categories);
-         this.formActive = !this.formActive;
+         this.entryFaded = true;
+         setTimeout(
+            function () {
+               this.emitAlert("Saved to favorites", "success");
+               this.likeEntry(this.id, categories);
+            }.bind(this),
+            500
+         );
       },
    },
    mounted() {
@@ -137,6 +169,10 @@ export default {
    position: relative;
    width: 100%;
    overflow: hidden;
+   transition: opacity 0.5s ease;
+   &--faded {
+      opacity: 0;
+   }
    &__heading {
       font-size: 1.5rem;
       line-height: 1.25;
