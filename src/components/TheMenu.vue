@@ -25,14 +25,18 @@ export default {
       "menu-navigation": MenuNavigation,
       "menu-toggle": MenuToggle,
    },
+   emits: ["change-page"],
    data() {
       return {
          menuIsActive: false,
       };
    },
    methods: {
-      toggleMenu() {
+      toggleMenu(page) {
          this.menuIsActive = !this.menuIsActive;
+         if (page) {
+            this.$emit("change-page", page);
+         }
       },
    },
 };

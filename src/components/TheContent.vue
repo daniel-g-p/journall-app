@@ -1,6 +1,10 @@
 <template>
    <main class="content">
-      <home-page v-bind:content="entries" v-bind:user="user"></home-page>
+      <home-page
+         v-if="activePage === 'home'"
+         v-bind:content="entries"
+         v-bind:user="user"
+      ></home-page>
    </main>
 </template>
 
@@ -10,6 +14,12 @@ import HomePage from "./HomePage.vue";
 export default {
    components: {
       "home-page": HomePage,
+   },
+   props: {
+      activePage: {
+         type: String,
+         required: true,
+      },
    },
    provide() {
       return {

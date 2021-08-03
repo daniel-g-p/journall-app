@@ -5,8 +5,8 @@
       v-bind:isActive="alertActive"
       v-on:deactivate-alert="closeAlert"
    ></base-alert>
-   <the-menu></the-menu>
-   <the-content></the-content>
+   <the-menu v-on:change-page="changePage"></the-menu>
+   <the-content v-bind:activePage="activePage"></the-content>
 </template>
 
 <script>
@@ -30,6 +30,7 @@ export default {
          alertType: "",
          alertActive: false,
          alertCount: 0,
+         activePage: "home",
       };
    },
    methods: {
@@ -48,6 +49,9 @@ export default {
          this.alertMessage = message;
          this.alertType = type;
          this.alertCount++;
+      },
+      changePage(page) {
+         this.activePage = page;
       },
    },
    watch: {

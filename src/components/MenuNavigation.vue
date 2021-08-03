@@ -83,7 +83,7 @@ export default {
       setActiveLink(link) {
          this.activeLink.active = false;
          this.links.find((l) => l.name === link).active = true;
-         this.$emit("toggle-menu");
+         this.$emit("toggle-menu", link);
       },
    },
 };

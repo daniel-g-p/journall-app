@@ -63,7 +63,7 @@ export default {
    width: 100%;
    height: 100%;
    overflow-y: scroll;
-   background-color: $color-green-light;
+   background-color: $color-white;
    z-index: 250;
    transition: opacity 0.25s ease;
    padding: 3rem 1rem;
