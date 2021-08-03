@@ -5,15 +5,22 @@
          v-bind:content="entries"
          v-bind:user="user"
       ></home-page>
+      <favorites-page
+         v-if="activePage === 'favorites'"
+         v-bind:all="entries"
+         v-bind:favorites="user.favorites"
+      ></favorites-page>
    </main>
 </template>
 
 <script>
 import HomePage from "./HomePage.vue";
+import FavoritesPage from "./FavoritesPage.vue";
 
 export default {
    components: {
       "home-page": HomePage,
+      "favorites-page": FavoritesPage,
    },
    props: {
       activePage: {
