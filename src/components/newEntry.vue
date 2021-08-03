@@ -1,5 +1,10 @@
 <template>
-   <section class="entry" v-bind:class="stateClass" ref="entry">
+   <section
+      v-if="canvasVisible"
+      class="entry"
+      v-bind:class="stateClass"
+      ref="entry"
+   >
       <base-confirm-card
          class="entry__confirm-card"
          v-bind:isActive="confirmDiscardActive"
@@ -41,14 +46,14 @@
          v-bind:class="circleClass"
          v-bind:style="circleStyle"
       ></div>
-      <new-entry-button
-         v-bind:isActive="buttonsActive"
-         v-on:toggle-canvas="toggleCanvas"
-         v-on:post-entry="post"
-         v-on:save-draft="save"
-         v-on:discard-entry="toggleDiscardConfirmation"
-      ></new-entry-button>
    </section>
+   <new-entry-button
+      v-bind:isActive="isActive"
+      v-on:toggle-canvas="toggleCanvas"
+      v-on:post-entry="post"
+      v-on:save-draft="save"
+      v-on:discard-entry="toggleDiscardConfirmation"
+   ></new-entry-button>
 </template>
 
 <script>
@@ -69,6 +74,7 @@ export default {
    ],
    data() {
       return {
+         canvasVisible: false,
          content: "",
          title: "",
          textareaElement: null,
@@ -107,21 +113,25 @@ export default {
          this.updateIdeatext();
          this.textareaHeight = null;
       },
-      toggleButtons() {
-         this.buttonsActive = !this.buttonsActive;
-      },
       toggleCanvas() {
-         this.isActive = !this.isActive;
-         this.buttonsActive = !this.buttonsActive;
-         if (this.isActive) {
-            this.closeAlert();
+         if (this.canvasVisible) {
+            this.isActive = false;
+            setTimeout(
+               function () {
+                  this.canvasVisible = false;
+                  this.clearInputs();
+               }.bind(this),
+               750
+            );
+         } else {
+            this.canvasVisible = true;
+            setTimeout(
+               function () {
+                  this.isActive = true;
+               }.bind(this),
+               0
+            );
          }
-         setTimeout(
-            function () {
-               this.clearInputs();
-            }.bind(this),
-            500
-         );
       },
       resizeTextArea() {
          this.textareaHeight = this.textareaElement.scrollHeight + "px";
